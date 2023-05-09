@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+   web:
+       build: .
+       command: bash -c "python3 src/train.py && python3 src/predict.py && python3 src/unit_tests/test_predicting.py && python3  src/unit_tests/test_training.py"
+       ports:
+           - 8000:8000
+       image: nikitaromanoov/mle-template:latest

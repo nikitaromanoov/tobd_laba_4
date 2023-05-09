@@ -16,16 +16,20 @@ import traceback
 from sklearn import tree
 from sklearn.metrics import f1_score
 import pickle
+import configparser
 
 
 SHOW_LOG = True
+
+config = configparser.ConfigParser()
+config.read("config.ini")
 
 
 class Trainer():
 
     def __init__(self, path_dataset) -> None:
     
-        self.model = tree.DecisionTreeClassifier(max_depth=10)
+        self.model = tree.DecisionTreeClassifier(max_depth = int( config["parameters"]["max_depth"]))
 
         df_train = pd.read_csv(path_dataset+"/train.csv")
         df_test = pd.read_csv(path_dataset+"/test.csv")
