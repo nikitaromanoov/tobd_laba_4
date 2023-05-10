@@ -35,6 +35,8 @@ push в ветку разработки, важна история коммит�
 
 https://github.com/nikitaromanoov/tobd_laba_1/tree/master/.github/workflows
 
+<img width="648" alt="image" src="https://github.com/nikitaromanoov/tobd_laba_1/assets/91135334/d90dcbb6-5b27-4314-94de-296ba4635f7d">
+
 
 
 ### GitHub
