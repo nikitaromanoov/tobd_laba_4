@@ -19,7 +19,7 @@ def redis_f(name, value):
         r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
                         port=int(os.environ.get("REDIS_PORT")),
                         username=os.environ.get("REDIS_USER"),
-                        password=os.environ.get("PASSWORD"),
+                        password=os.environ.get("REDIS_PASSWORD"),
                         decode_responses=True)
 
         r.set(name, value)
