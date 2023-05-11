@@ -6,7 +6,7 @@ services:
        ports:
            - 8000:8000
        image: nikitaromanoov/tobd_laba_1:latest
-       enviroment:
+       environment:
           REDIS_USER: ${REDIS_USER}
           REDIS_PASSWORD: ${REDIS_PASSWORD}
           REDIS_ADDRESS: ${REDIS_ADDRESS}
