@@ -20,7 +20,7 @@ class ModelPrediction:
 def redis_f(name, value):
         
         r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
-                        port=os.environ.get("REDIS_PORT"),
+                        port=int(os.environ.get("REDIS_PORT")),
                         username=os.environ.get("REDIS_USER"),
                         password=os.environ.get("PASSWORD"),
                         decode_responses=True)
