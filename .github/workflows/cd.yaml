@@ -6,6 +6,13 @@ on:
     types:
       - completed
 
+
+env:
+  REDIS_USER="${{ secrets.REDIS_USER }}"
+  REDIS_PASSWORD="${{ secrets.REDIS_PASSWORD }}"
+  REDIS_ADDRESS="${{ secrets.REDIS_ADDRESS}}"
+  REDIS_PORT="${{ secrets.REDIS_PORT }}"
+  
 jobs:
   cd:
     runs-on: ubuntu-latest
@@ -22,14 +29,6 @@ jobs:
       -
         name: Pull with compose
         run: docker-compose pull
-      -
-        name: create .env file
-        run: |
-          touch .env
-          echo REDIS_USER="${{secrets.REDIS_USER }}" >> .env
-          echo REDIS_PASSWORD="${{secrets.REDIS_PASSWORD }}" >> .env
-          echo REDIS_ADDRESS="${{secrets.REDIS_ADDRESS}}" >> .env
-          echo REDIS_PORT="${{secrets.REDIS_PORT }}" >> .env
       -
         name: Run tests
         run: docker-compose up --abort-on-container-exit
