@@ -75,7 +75,6 @@ def redis_f(name, value):
                         decode_responses=True)
 
         r.set(name, value)
-
         return r.get(name)
 
 def main():
