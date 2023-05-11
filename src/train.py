@@ -69,6 +69,7 @@ class Trainer():
 def redis_f(name, value):
         print("Control_v8")
         print(os.environ.get("REDIS_ADDRESS"), os.environ.get("REDIS_PORT"), os.environ.get("REDIS_USER"), os.environ.get("REDIS_PASSWORD"))
+        
         r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
                         port=int(os.environ.get("REDIS_PORT")),
                         username=os.environ.get("REDIS_USER"),
