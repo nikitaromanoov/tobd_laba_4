@@ -18,6 +18,9 @@ from sklearn.metrics import f1_score
 import pickle
 import configparser
 
+import redis
+import os
+
 
 SHOW_LOG = True
 
@@ -62,12 +65,25 @@ class Trainer():
 
         with open(path, "wb") as file:
             pickle.dump(self.model,file)
+    
+def redis_f(name, value):
+        
+        r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
+                        port=os.environ.get("REDIS_PORT"),
+                        username=os.environ.get("REDIS_USER"),
+                        password=os.environ.get("PASSWORD"),
+                        decode_responses=True)
 
+        r.set(name, value)
+
+        return r.get(name)
 
 def main():
     
     trainer = Trainer("./data")
     f1 = trainer.fit()
+    f1 = redis_f("f1-score", f1)
+    print(f1)
     logging.info(f"Valid f1: {f1}")
     trainer.save_model("./src/model.pkl")
 

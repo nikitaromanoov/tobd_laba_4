@@ -10,7 +10,21 @@ print(os.getcwd())
 
 from predict import ModelPrediction
 
+import redis
+import os
 
+
+def redis_f(name, value):
+        
+        r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
+                        port=os.environ.get("REDIS_PORT"),
+                        username=os.environ.get("REDIS_USER"),
+                        password=os.environ.get("PASSWORD"),
+                        decode_responses=True)
+
+        r.set(name, value)
+
+        return r.get(name)    
 
 class TestMultiModel(unittest.TestCase):
 
@@ -19,8 +33,8 @@ class TestMultiModel(unittest.TestCase):
     
     def test_training(self):
         predictions = self.predict.predict([[0,0,93,60,0,0,35.3,0.263,25], [0,0,2,3,4,5,3,7,15]])
+        predictions = redis_f("prediction", str(predictions) )
         print(predictions)
-        #self.assertTrue(f1 is not None)
 
 if __name__ == "__main__":
     unittest.main()
