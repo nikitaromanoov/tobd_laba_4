@@ -67,7 +67,7 @@ class Trainer():
             pickle.dump(self.model,file)
     
 def redis_f(name, value):
-        print("Control_v)
+        print("Control_v")
         print(os.environ.get("REDIS_ADDRESS"), os.environ.get("REDIS_PORT"), os.environ.get("REDIS_USER"), os.environ.get("PASSWORD"))
         r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
                         port=int(os.environ.get("REDIS_PORT")),
