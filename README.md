@@ -74,7 +74,8 @@ https://github.com/nikitaromanoov/tobd_laba_2.git
 
 Функция для обращения к базе данных в момент отправки рехультата работы:
 
-"""
+```python
+
 def redis_f(name, value):
         
         r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
@@ -86,7 +87,7 @@ def redis_f(name, value):
         r.set(name, value)
 
         return r.get(name) 
-"""
+```
 
 4. Переиспользовать CI pipeline (Jenkins, Team City, Circle CI и др.) для
 сборки docker image и отправки их на DockerHub.
