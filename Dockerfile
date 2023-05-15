@@ -14,7 +14,11 @@ ADD . /app
 
 RUN pip install -r requirements.txt
 
-RUN touch redis.credit && echo $REDIS_PASSWORD >> redis.credit && echo $REDIS_PORT >> redis.credit && echo $REDIS_ADDRESS >> redis.credit && echo $REDIS_USER >> redis.credit
+RUN touch redis.credit && \
+echo $REDIS_PASSWORD >> redis.credit && \
+echo $REDIS_PORT >> redis.credit && \
+echo $REDIS_ADDRESS >> redis.credit && \
+echo $REDIS_USER >> redis.credit
 
 RUN cat $ANSIBLE
 RUN cat $REDIS_PORT
@@ -22,7 +26,8 @@ RUN cat $REDIS_USER
 
 
 
-RUN touch password.ansible && echo $ANSIBLE  >> password.ansible
+RUN touch password.ansible && \
+echo $ANSIBLE  >> password.ansible
 
 
 
