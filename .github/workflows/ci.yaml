@@ -34,4 +34,4 @@ jobs:
           push: true
           tags: nikitaromanoov/tobd_laba_3:latest
           build-args: |
-            ANSIBLE = ${{secrets.ansible}}
+            ansible = ${{secrets.ANSIBLE}}
