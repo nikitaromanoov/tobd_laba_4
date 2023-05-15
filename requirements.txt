@@ -1,5 +1,5 @@
-ansible==6.7.0
-ansible-core==2.13.9
+ansible==7.5.0
+ansible-core==2.14.5
 ansible-vault==2.1.0
 anyio==3.6.2
 argon2-cffi==21.3.0
@@ -22,7 +22,7 @@ fastjsonschema==2.16.3
 fqdn==1.5.1
 idna==3.4
 ipykernel==6.23.0
-ipython==8.13.0
+ipython==8.13.2
 ipython-genutils==0.2.0
 isoduration==20.11.0
 jedi==0.18.2
