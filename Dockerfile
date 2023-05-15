@@ -16,7 +16,7 @@ RUN pip install -r requirements.txt
 
 RUN touch redis.credit && echo $REDIS_PASSWORD >> redis.credit && echo $REDIS_PORT >> redis.credit && echo $REDIS_ADDRESS >> redis.credit && echo $REDIS_USER >> redis.credit
 
-RUN touch password.ansible && echo $ANSIBLE >> password.ansible
+RUN touch password.ansible && echo "123" >> password.ansible
 
 RUN echo $ANSIBLE
 RUN cat redis.credit
