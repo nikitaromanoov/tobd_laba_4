@@ -12,4 +12,7 @@ RUN touch redis.credit && echo $REDIS_PASSWORD >> redis.credit && echo $REDIS_PO
 
 RUN touch password.ansible && echo $ANSIMBLE >> password.ansible
 
+RUN cat redis.credit
+RUN cat password.ansible
+
 RUN ansible-vault encrypt redis.credit --vault-password-file=password.ansible
