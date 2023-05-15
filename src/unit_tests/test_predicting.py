@@ -12,14 +12,26 @@ from predict import ModelPrediction
 
 import redis
 import os
+from ansible_vault import Vault
 
+def ansible():
+
+    vault = Vault(os.environ.get("ANSIBLE"))
+    data = vault.load(open("password.txt").read()).split(" ")
+    
+    REDIS_ADDRESS = data[2]
+    REDIS_PORT = data[3]
+    REDIS_USER = data[0]
+    REDIS_PASSWORD = data[1]
+    return REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD  
+    
 
 def redis_f(name, value):
-        
-        r = redis.Redis(host=os.environ.get("REDIS_ADDRESS"),
-                        port=int(os.environ.get("REDIS_PORT")),
-                        username=os.environ.get("REDIS_USER"),
-                        password=os.environ.get("REDIS_PASSWORD"),
+        REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD = ansible()
+        r = redis.Redis(host=REDIS_ADDRESS,
+                        port=REDIS_PORT,
+                        username=REDIS_USER,
+                        password=REDIS_PASSWORD,
                         decode_responses=True)
 
         r.set(name, value)
