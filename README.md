@@ -106,4 +106,82 @@ https://github.com/nikitaromanoov/tobd_laba_2/tree/master/.github/workflows
 <img width="584" alt="image" src="https://github.com/nikitaromanoov/tobd_laba_2/assets/91135334/5137fb54-c20f-44e1-8066-2d69432f5299">
 
 
+# Лабораторная работа №3
+## Цель работы
+Получить навыки размещения секретов в хранилище и взаимодействия с ним.
+
+## Ход работы
+
+1. Создать репозитории-форк модели на GitHub, созданной в рамках
+лабораторной работы №2, регулярно проводить commit + push в ветку
+разработки, важна история коммитов.
+
+https://github.com/nikitaromanoov/tobd_laba_3.git
+
+
+2. Настроить хранилище секретов согласно варианту - Ansible Vault.
+
+
+
+3. Реализовать взаимодействие следующим образом:
+* разместить данные для авторизации (секреты) в хранилище секретов;
+* реализовать получение секретов при обращении к сервису БД;
+* удалить локальные конфигурационные файлы, содержащие секреты.
+
+```
+def ansible():
+
+    vault = Vault(os.environ.get("ANSIBLE"))
+    data = vault.load(open("password.txt").read()).split(" ")
+    
+    REDIS_ADDRESS = data[2]
+    REDIS_PORT = data[3]
+    REDIS_USER = data[0]
+    REDIS_PASSWORD = data[1]
+    return REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD        
+        
+        
+        
+def redis_f(name, value):
+        REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD = ansible()
+        r = redis.Redis(host=REDIS_ADDRESS,
+                        port=REDIS_PORT,
+                        username=REDIS_USER,
+                        password=REDIS_PASSWORD,
+                        decode_responses=True)
+
+        r.set(name, value)
+
+        return r.get(name)     
+```
+
+
+4. Инициализация сервиса хранилища секретов должна проходить на этапе сборки контейнера.
+
+```
+RUN touch redis.credit && \
+echo $REDIS_PASSWORD >> redis.credit && \
+echo $REDIS_PORT >> redis.credit && \
+echo $REDIS_ADDRESS >> redis.credit && \
+echo $REDIS_USER >> redis.credit
+
+
+RUN touch password.ansible && \
+echo $ANSIBLE  >> password.ansible
+
+RUN ansible-vault encrypt redis.credit --vault-password-file=password.ansible
+```
+
+5. Переиспользовать CI pipeline (Jenkins, Team City, Circle CI и др.) для
+сборки docker image и отправки их на DockerHub.
+6. Переиспользовать CD pipeline для запуска контейнеров и проведения
+функционального тестирования по сценарию, запуск должен стартовать
+по требованию или расписанию или как вызов с последнего этапа CI
+pipeline.
+
+6.Результаты функционального тестирования и скрипты конфигурации
+CI/CD pipeline приложить к отчёту. 
+
+https://github.com/nikitaromanoov/tobd_laba_3/tree/master/.github/workflows
+
 
