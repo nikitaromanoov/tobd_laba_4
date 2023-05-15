@@ -23,6 +23,7 @@ import configparser
 import redis
 import os
 
+from ansible_vault import Vault
 
 SHOW_LOG = True
 
