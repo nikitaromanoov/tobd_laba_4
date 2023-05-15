@@ -26,7 +26,7 @@ jobs:
         name: create .env file
         run: |
           touch .env
-          echo ANSIBLE="${{ANSIBLET }}" >> .env
+          echo ANSIBLE="${{secrets.ANSIBLET }}" >> .env
       -
         name: Run tests
         run: docker-compose up --abort-on-container-exit
