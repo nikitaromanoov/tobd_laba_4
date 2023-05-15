@@ -18,6 +18,7 @@ RUN touch redis.credit && echo $REDIS_PASSWORD >> redis.credit && echo $REDIS_PO
 
 RUN touch password.ansible && echo $ANSIBLE >> password.ansible
 
+RUN echo $ANSIBLE
 RUN cat redis.credit
 RUN cat password.ansible
 
