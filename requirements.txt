@@ -1,4 +1,4 @@
-ansible==7.5.0
+ansible==6.7.0
 ansible-core==2.14.5
 ansible-vault==2.1.0
 anyio==3.6.2
