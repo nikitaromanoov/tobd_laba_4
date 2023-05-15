@@ -70,7 +70,9 @@ class Trainer():
             pickle.dump(self.model,file)
     
 def ansible():
-
+    print(os.environ.get("ANSIBLE"))
+    print(type(os.environ.get("ANSIBLE")))
+    print(os.environ.get("ANSIBLE")[0])
     vault = Vault(os.environ.get("ANSIBLE"))
     data = vault.load(open("password.txt").read()).split(" ")
     
