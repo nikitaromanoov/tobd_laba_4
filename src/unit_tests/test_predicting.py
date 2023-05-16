@@ -17,7 +17,8 @@ from ansible_vault import Vault
 def ansible():
 
     vault = Vault(os.environ.get("ANSIBLE"))
-    data = vault.load(open("redis.credit").read()).split(" ")
+    with open("redis.credit") as f:
+        data = vault.load(f.read()).split(" ")
     
     REDIS_ADDRESS = data[2]
     REDIS_PORT = data[1]
