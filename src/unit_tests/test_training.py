@@ -20,9 +20,9 @@ def ansible():
     data = vault.load(open("redis.credit").read()).split(" ")
     
     REDIS_ADDRESS = data[2]
-    REDIS_PORT = data[3]
-    REDIS_USER = data[0]
-    REDIS_PASSWORD = data[1]
+    REDIS_PORT = data[1]
+    REDIS_USER = data[3]
+    REDIS_PASSWORD = data[0]
     return REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD  
     
     
