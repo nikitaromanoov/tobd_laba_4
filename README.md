@@ -184,4 +184,6 @@ CI/CD pipeline приложить к отчёту.
 
 https://github.com/nikitaromanoov/tobd_laba_3/tree/master/.github/workflows
 
+<img width="413" alt="image" src="https://github.com/nikitaromanoov/tobd_laba_3/assets/91135334/97671796-8224-4c1a-87f8-851bdf725c64">
+
 
