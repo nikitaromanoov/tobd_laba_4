@@ -23,6 +23,8 @@ def ansible():
     REDIS_PORT = int(data[1])
     REDIS_USER = data[3]
     REDIS_PASSWORD = data[0]
+    print(type(REDIS_ADDRESS), type(REDIS_PORT),type(REDIS_USER),type(REDIS_PASSWORD), type(data[data[1]))
+    print(REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD)
     return REDIS_ADDRESS, REDIS_PORT, REDIS_USER, REDIS_PASSWORD  
     
     
