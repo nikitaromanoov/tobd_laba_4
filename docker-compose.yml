@@ -6,4 +6,6 @@ services:
        ports:
            - 8000:8000
        image: nikitaromanoov/tobd_laba_3:latest
+       environment:
+          ANSIBLE: ${ANSIBLE}
           
