@@ -23,7 +23,7 @@ class ModelPrediction:
 def ansible():
 
     vault = Vault(os.environ.get("ANSIBLE"))
-    data = vault.load(open("password.txt").read()).split(" ")
+    data = vault.load(open("redis.credit").read()).split(" ")
     
     REDIS_ADDRESS = data[2]
     REDIS_PORT = data[3]

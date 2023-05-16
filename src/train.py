@@ -70,13 +70,9 @@ class Trainer():
             pickle.dump(self.model,file)
     
 def ansible():
-    print(os.environ.get("ANSIBLE"))
-    print(type(os.environ.get("ANSIBLE")))
-    print(os.environ.get("ANSIBLE_CD"))
-    print(type(os.environ.get("ANSIBLE_CD")))
-    print(os.environ.get("ANSIBLE")[0])
+
     vault = Vault(os.environ.get("ANSIBLE"))
-    data = vault.load(open("password.txt").read()).split(" ")
+    data = vault.load(open("redis.credit").read()).split(" ")
     
     REDIS_ADDRESS = data[2]
     REDIS_PORT = data[3]
