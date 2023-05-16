@@ -72,6 +72,8 @@ class Trainer():
 def ansible():
     print(os.environ.get("ANSIBLE"))
     print(type(os.environ.get("ANSIBLE")))
+    print(os.environ.get("ANSIBLE_CD"))
+    print(type(os.environ.get("ANSIBLE_CD")))
     print(os.environ.get("ANSIBLE")[0])
     vault = Vault(os.environ.get("ANSIBLE"))
     data = vault.load(open("password.txt").read()).split(" ")
