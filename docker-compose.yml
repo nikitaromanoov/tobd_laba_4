@@ -1,7 +1,12 @@
 version: '3.8'
 services:
    classifiation_diabets:
-       build: .
+       build:
+         context: .
+         args:
+            ANSIBLE: ${ANSIBLE}
+            KAFKA_HOST: ${KAFKA_HOST}
+            KAFKA_PORT: ${KAFKA_PORT}
        command: bash -c "python3 src/train.py && python3 src/predict.py && python3 src/unit_tests/test_predicting.py && python3  src/unit_tests/test_training.py"
        ports:
            - 8000:8000
