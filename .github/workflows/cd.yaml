@@ -33,3 +33,7 @@ jobs:
       -
         name: Run tests
         run: docker-compose up --abort-on-container-exit
+        env:
+          ANSIBLE=${{secrets.ANSIBLE_CD }}
+          KAFKA_HOST=${{ secrets.KAFKA_HOST }}
+          KAFKA_PORT=${{ secrets.KAFKA_PORT }}
