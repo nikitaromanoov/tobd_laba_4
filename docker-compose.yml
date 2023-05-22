@@ -24,7 +24,7 @@ services:
            ZOOKEEPER_CLIENT_PORT: 2181        
    k:
        image: confluentinc/cp-kafka:7.3.2
-       container_name: kafka
+       container_name: k
        ports:
            - "${KAFKA_PORT}:${KAFKA_PORT}"
        depends_on:
@@ -44,7 +44,7 @@ services:
        image: confluentinc/cp-kafka:7.3.2
        container_name: kafka-topics-generator
        depends_on:
-           - kafka
+           - k
        command: >
            bash -c
              "sleep 5s &&
