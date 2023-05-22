@@ -8,6 +8,15 @@ import os
 import redis
 
 from ansible_vault import Vault
+from kafka import KafkaProducer
+
+
+def  t_kafka(inp):
+    producer = KafkaProducer(bootstrap_servers="kafka:9092")
+    producer.send("kafka-pred", bytearray(str(inp), "utf-8"))
+    producer.close()
+
+
 
 class ModelPrediction:
     
@@ -52,7 +61,7 @@ def main():
 	trainer =  ModelPrediction("./data")
 	predictions = trainer.predict([[0,0,93,60,0,0,35.3,0.263,25]])
 	predictions = redis_f("prediction", str(predictions) )
-	
+	t_kafka(predictions)
 	print(predictions)
 
 if __name__ == '__main__':
