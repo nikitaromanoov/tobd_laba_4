@@ -27,6 +27,8 @@ jobs:
         run: |
           touch .env
           echo ANSIBLE="${{secrets.ANSIBLE_CD }}" >> .env
+          echo KAFKA_HOST="${{ secrets.KAFKA_HOST }}" >> .env
+          echo KAFKA_PORT="${{ secrets.KAFKA_PORT }}" >> .env
           cat .env
       -
         name: Run tests
