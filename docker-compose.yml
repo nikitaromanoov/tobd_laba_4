@@ -8,6 +8,8 @@ services:
        image: nikitaromanoov/tobd_laba_4:latest
        environment:
           ANSIBLE: ${ANSIBLE}
+          KAFKA_HOST: ${KAFKA_HOST}
+          KAFKA_PORT: ${KAFKA_PORT}
           
           
    zookeeper:
@@ -19,7 +21,7 @@ services:
        image: confluentinc/cp-kafka:7.3.2
        container_name: kafka
        ports:
-           - "9092:9092"
+           - "${KAFKA_PORT}:${KAFKA_PORT}"
        depends_on:
            - zookeeper
        environment:
@@ -27,8 +29,8 @@ services:
            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
            KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-           KAFKA_LISTENERS: INTERNAL://:9092
-           KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092
+           KAFKA_LISTENERS: INTERNAL://:${KAFKA_PORT}
+           KAFKA_ADVERTISED_LISTENERS: INTERNAL://${KAFKA_HOST}:${KAFKA_PORT}
            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
           
    kafka-topics-generator:
@@ -39,10 +41,10 @@ services:
        command: >
            bash -c
              "sleep 5s &&
-             kafka-topics --create --topic=kafka-predictions --if-not-exists --bootstrap-server=kafka:9092"
+             kafka-topics --create --topic=kafka-predictions --if-not-exists --bootstrap-server=${KAFKA_HOST}:${KAFKA_PORT}"
    kafka-consumer:
        image: confluentinc/cp-kafka:7.3.2
        container_name: kafka-consumer
        command: >
            bash -c
-             "kafka-console-consumer --bootstrap-server kafka:9092 --topic kafka-pred --from-beginning"
+             "kafka-console-consumer --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --topic kafka-pred --from-beginning"
