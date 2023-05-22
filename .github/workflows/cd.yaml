@@ -20,9 +20,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Pull with compose
-        run: docker-compose pull
-      -
         name: create .env file
         run: |
           touch .env
@@ -30,6 +27,9 @@ jobs:
           echo KAFKA_HOST="${{ secrets.KAFKA_HOST }}" >> .env
           echo KAFKA_PORT="${{ secrets.KAFKA_PORT }}" >> .env
           cat .env
+      -
+        name: Pull with compose
+        run: docker-compose pull
       -
         name: Run tests
         run: docker-compose up --abort-on-container-exit
