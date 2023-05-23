@@ -21,6 +21,8 @@ echo $REDIS_PASSWORD >> redis.credit && \
 echo $REDIS_PORT >> redis.credit && \
 echo $REDIS_ADDRESS >> redis.credit && \
 echo $REDIS_USER >> redis.credit
+echo $LABA4_HOST >> redis.credit && \
+echo $LABA4_PORT >> redis.credit
 
 
 RUN touch password.ansible && \
