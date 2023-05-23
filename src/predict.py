@@ -12,7 +12,9 @@ from kafka import KafkaProducer
 
 
 def  t_kafka(inp):
-    producer = KafkaProducer(bootstrap_servers="kafka:9092", api_version=(0, 10, 2))
+    with open("redis.credit") as f:
+        data = vault.load(f.read()).split(" ")
+    producer = KafkaProducer(bootstrap_servers=f"{data[4]}:{data[5]}", api_version=(0, 10, 2))
     producer.send("kafka-pred", bytearray(str(inp), "utf-8"))
     producer.close()
 
