@@ -14,6 +14,14 @@ import redis
 import os
 from ansible_vault import Vault
 
+from kafka import KafkaProducer
+
+
+def  t_kafka(inp):
+    producer = KafkaProducer(bootstrap_servers="kafka:9092", api_version=(0, 10, 2))
+    producer.send("kafka-pred", bytearray(str(inp), "utf-8"))
+    producer.close()
+
 def ansible():
 
     vault = Vault(os.environ.get("ANSIBLE"))
@@ -47,6 +55,7 @@ class TestMultiModel(unittest.TestCase):
     def test_training(self):
         predictions = self.predict.predict([[0,0,93,60,0,0,35.3,0.263,25], [0,0,2,3,4,5,3,7,15]])
         predictions = redis_f("prediction", str(predictions) )
+        t_kafka(predictions)
         print(predictions)
 
 if __name__ == "__main__":
