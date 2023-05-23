@@ -188,7 +188,7 @@ https://github.com/nikitaromanoov/tobd_laba_3/tree/master/.github/workflows
 
 
 
-# Лабораторная работа №3
+# Лабораторная работа №4
 ## Цель работы
 Получить навыки реализации Kafka Producer и Consumer и их последующей интеграции.
 
@@ -210,7 +210,10 @@ from kafka import KafkaProducer
 
 
 def  t_kafka(inp):
-    producer = KafkaProducer(bootstrap_servers="kafka:9092", api_version=(0, 10, 2))
+    vault = Vault(os.environ.get("ANSIBLE"))
+    with open("redis.credit") as f:
+        data = vault.load(f.read()).split(" ")
+    producer = KafkaProducer(bootstrap_servers=f"{str(data[4])}:{str(data[5])}", api_version=(0, 10, 2))
     producer.send("kafka-pred", bytearray(str(inp), "utf-8"))
     producer.close()
 ```
@@ -260,10 +263,12 @@ def  t_kafka(inp):
 ```
 
 4. Провести интеграцию Kafka сервиса с сервисом хранилища секретов. Необходимо сохранить защищённое обращение к сервису БД.
-
 5. Переиспользовать CI pipeline (Jenkins, Team City, Circle CI и др.) для сборки docker image и отправки их на DockerHub.
 6. Переиспользовать CD pipeline для запуска контейнеров и проведения функционального тестирования по сценарию, запуск должен стартовать по требованию или расписанию или как вызов с последнего этапа CI pipeline.
 7. Результаты функционального тестирования и скрипты конфигурации
 CI/CD pipeline приложить к отчёту.
 
 https://github.com/nikitaromanoov/tobd_laba_3/tree/master/.github/workflows
+
+<img width="735" alt="image" src="https://github.com/nikitaromanoov/tobd_laba_4/assets/91135334/18bfda13-6076-47da-a1b8-723ba7414a7c">
+
