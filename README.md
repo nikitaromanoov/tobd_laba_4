@@ -187,3 +187,83 @@ https://github.com/nikitaromanoov/tobd_laba_3/tree/master/.github/workflows
 <img width="413" alt="image" src="https://github.com/nikitaromanoov/tobd_laba_3/assets/91135334/97671796-8224-4c1a-87f8-851bdf725c64">
 
 
+
+# Лабораторная работа №3
+## Цель работы
+Получить навыки реализации Kafka Producer и Consumer и их последующей интеграции.
+
+## Ход работы
+
+1. Создать репозитории-форк модели на GitHub, созданной в рамках
+лабораторной работы №3, регулярно проводить commit + push в ветку
+разработки, важна история коммитов.
+
+https://github.com/nikitaromanoov/tobd_laba_4
+
+
+2. Реализовать Kafka Producer либо на уровне сервиса модели, либо
+отдельным сервисом в контейнере. Producer необходим для отправки
+сообщения с результатом работы модели в Consumer.
+
+```
+from kafka import KafkaProducer
+
+
+def  t_kafka(inp):
+    producer = KafkaProducer(bootstrap_servers="kafka:9092", api_version=(0, 10, 2))
+    producer.send("kafka-pred", bytearray(str(inp), "utf-8"))
+    producer.close()
+```
+
+
+3. Реализовать Kafka Consumer либо на уровне сервиса модели, либо отдельным сервисом в контейнере. Consumer необходим для приёма сообщения с результатом работы модели.
+
+```
+   zookeeper:
+       image: confluentinc/cp-zookeeper:7.3.2
+       container_name: zookeeper
+       environment:
+           ZOOKEEPER_CLIENT_PORT: 2181        
+   kafka:
+       image: confluentinc/cp-kafka:7.3.2
+       container_name: kafka
+       ports:
+           - "${LABA4_PORT}:${LABA4_PORT}"
+       depends_on:
+           - zookeeper
+       environment:
+           LABA4_HOST: ${LABA4_HOST}
+           LABA4_PORT: ${LABA4_PORT}
+           KAFKA_BROKER_ID: 1
+           KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+           KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+           KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+           KAFKA_LISTENERS: INTERNAL://:${LABA4_PORT}
+           KAFKA_ADVERTISED_LISTENERS: INTERNAL://${LABA4_HOST}:${LABA4_PORT}
+           KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
+          
+   kafka-topics-generator:
+       image: confluentinc/cp-kafka:7.3.2
+       container_name: kafka-topics-generator
+       depends_on:
+           - kafka
+       command: >
+           bash -c
+             "sleep 5s &&
+             kafka-topics --create --topic=kafka-predictions --if-not-exists --bootstrap-server=${LABA4_HOST}:${LABA4_PORT}"
+   kafka-consumer:
+       image: confluentinc/cp-kafka:7.3.2
+       container_name: kafka-consumer
+       command: >
+           bash -c
+             "kafka-console-consumer --bootstrap-server ${LABA4_HOST}:${LABA4_PORT} --topic kafka-pred --from-beginning"
+```
+
+4. Провести интеграцию Kafka сервиса с сервисом хранилища секретов. Необходимо сохранить защищённое обращение к сервису БД.
+
+5. Переиспользовать CI pipeline (Jenkins, Team City, Circle CI и др.) для сборки docker image и отправки их на DockerHub.
+6. Переиспользовать CD pipeline для запуска контейнеров и проведения функционального тестирования по сценарию, запуск должен стартовать по требованию или расписанию или как вызов с последнего этапа CI pipeline.
+7. Результаты функционального тестирования и скрипты конфигурации
+CI/CD pipeline приложить к отчёту.
+
+https://github.com/nikitaromanoov/tobd_laba_3/tree/master/.github/workflows
