@@ -5,16 +5,16 @@ services:
          context: .
          args:
             ANSIBLE: ${ANSIBLE}
-            KAFKA_HOST: ${KAFKA_HOST}
-            KAFKA_PORT: ${KAFKA_PORT}
+            KAFKA_HOST: ${LABA4_HOST}
+            KAFKA_PORT: ${LABA4_PORT}
        command: bash -c "python3 src/train.py && python3 src/predict.py && python3 src/unit_tests/test_predicting.py && python3  src/unit_tests/test_training.py"
        ports:
            - 8000:8000
        image: nikitaromanoov/tobd_laba_4:latest
        environment:
           ANSIBLE: ${ANSIBLE}
-          KAFKA_HOST: ${KAFKA_HOST}
-          KAFKA_PORT: ${KAFKA_PORT}
+          KAFKA_HOST: ${LABA4_HOST}
+          KAFKA_PORT: ${LABA4_PORT}
           
           
    zookeeper:
@@ -26,18 +26,18 @@ services:
        image: confluentinc/cp-kafka:7.3.2
        container_name: laba4
        ports:
-           - "${KAFKA_PORT}:${KAFKA_PORT}"
+           - "${LABA4_PORT}:${LABA4_PORT}"
        depends_on:
            - zookeeper
        environment:
-           KAFKA_HOST: ${KAFKA_HOST}
-           KAFKA_PORT: ${KAFKA_PORT}
+           KAFKA_HOST: ${LABA4_HOST}
+           KAFKA_PORT: ${LABA4_PORT}
            KAFKA_BROKER_ID: 1
            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
            KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-           KAFKA_LISTENERS: INTERNAL://:${KAFKA_PORT}
-           KAFKA_ADVERTISED_LISTENERS: INTERNAL://${KAFKA_HOST}:${KAFKA_PORT}
+           KAFKA_LISTENERS: INTERNAL://:${LABA4_PORT}
+           KAFKA_ADVERTISED_LISTENERS: INTERNAL://${LABA4_HOST}:${LABA4_PORT}
            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
           
    kafka-topics-generator:
@@ -48,10 +48,10 @@ services:
        command: >
            bash -c
              "sleep 5s &&
-             kafka-topics --create --topic=kafka-predictions --if-not-exists --bootstrap-server=${KAFKA_HOST}:${KAFKA_PORT}"
+             kafka-topics --create --topic=kafka-predictions --if-not-exists --bootstrap-server=${LABA4_HOST}:${LABA4_PORT}"
    kafka-consumer:
        image: confluentinc/cp-kafka:7.3.2
        container_name: kafka-consumer
        command: >
            bash -c
-             "kafka-console-consumer --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --topic kafka-pred --from-beginning"
+             "kafka-console-consumer --bootstrap-server ${LABA4_HOST}:${LABA4_PORT} --topic kafka-pred --from-beginning"
