@@ -22,9 +22,9 @@ services:
        container_name: zookeeper
        environment:
            ZOOKEEPER_CLIENT_PORT: 2181        
-   laba4:
+   kafka:
        image: confluentinc/cp-kafka:7.3.2
-       container_name: laba4
+       container_name: kafka
        ports:
            - "${LABA4_PORT}:${LABA4_PORT}"
        depends_on:
@@ -44,7 +44,7 @@ services:
        image: confluentinc/cp-kafka:7.3.2
        container_name: kafka-topics-generator
        depends_on:
-           - laba4
+           - kafka
        command: >
            bash -c
              "sleep 5s &&
