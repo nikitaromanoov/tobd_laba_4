@@ -13,9 +13,11 @@ from kafka import KafkaProducer
 
 def  t_kafka(inp):
     vault = Vault(os.environ.get("ANSIBLE"))
+    for i in f"{data[4]}:{data[5]}":
+        print(i.upper())
     with open("redis.credit") as f:
         data = vault.load(f.read()).split(" ")
-    producer = KafkaProducer(bootstrap_servers=f"{data[4]}:{data[5]}", api_version=(0, 10, 2))
+    producer = KafkaProducer(bootstrap_servers=f"{str(data[4])}:{str(data[5])}", api_version=(0, 10, 2))
     producer.send("kafka-pred", bytearray(str(inp), "utf-8"))
     producer.close()
 
