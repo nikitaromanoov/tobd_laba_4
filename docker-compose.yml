@@ -5,16 +5,16 @@ services:
          context: .
          args:
             ANSIBLE: ${ANSIBLE}
-            KAFKA_HOST: ${LABA4_HOST}
-            KAFKA_PORT: ${LABA4_PORT}
+            LABA4_HOST: ${LABA4_HOST}
+            LABA4_PORT: ${LABA4_PORT}
        command: bash -c "python3 src/train.py && python3 src/predict.py && python3 src/unit_tests/test_predicting.py && python3  src/unit_tests/test_training.py"
        ports:
            - 8000:8000
        image: nikitaromanoov/tobd_laba_4:latest
        environment:
           ANSIBLE: ${ANSIBLE}
-          KAFKA_HOST: ${LABA4_HOST}
-          KAFKA_PORT: ${LABA4_PORT}
+          LABA4_HOST: ${LABA4_HOST}
+          LABA4_PORT: ${LABA4_PORT}
           
           
    zookeeper:
@@ -30,8 +30,8 @@ services:
        depends_on:
            - zookeeper
        environment:
-           KAFKA_HOST: ${LABA4_HOST}
-           KAFKA_PORT: ${LABA4_PORT}
+           LABA4_HOST: ${LABA4_HOST}
+           LABA4_PORT: ${LABA4_PORT}
            KAFKA_BROKER_ID: 1
            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
