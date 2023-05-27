@@ -6,6 +6,7 @@ from sklearn import tree
 
 import os
 import redis
+import json
 
 from ansible_vault import Vault
 from kafka import KafkaProducer
